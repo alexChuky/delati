@@ -41,12 +41,10 @@ INSERT into tmp_UBIGEOdepartamentoes (departamento)
 SELECT distinct departamento FROM UBIGEO;
 
 select   count(*) into _var_totalGlobal from tmp_UBIGEOdepartamentoes;
- 
-insert into log (mensaje) values('ENTRE 1');
+
 
 while _var_contadorOferta <= _var_totalOferta loop
-	
-	insert into log (mensaje) values('ENTRE 2');
+
 	
 	select  idoferta into _var_idoferta    from tmp_oferta where id = _var_contadorOferta;
 	select lugar into _var_lugar from tmp_oferta where id = _var_contadorOferta;
@@ -54,15 +52,12 @@ while _var_contadorOferta <= _var_totalOferta loop
 	_var_contadorGlobal := 1;
 
 	WHILE _var_contadorGlobal <= _var_totalGlobal loop
-		insert into log (mensaje) values('ENTRE 3');
+
 		select departamento into _var_departamento from tmp_UBIGEOdepartamentoes where id = _var_contadorGlobal;
-		
-		insert into log (mensaje) values(_var_departamento);
-		insert into log (mensaje) values(_var_lugar);
+
 		
 		select  POSITION(upper(_var_departamento) in upper(_var_lugar)) into _var_provinciaBusqueda;
-		
-		insert into log (mensaje) values(_var_provinciaBusqueda);
+
 		
 		_var_provinciaBusqueda1 := 0;
 		_var_provinciaBusqueda2 := 0;
@@ -151,7 +146,7 @@ while _var_contadorOferta <= _var_totalOferta loop
 
 				_var_contadorprovincias2 := 1;
 				while _var_contadorprovincias2 <= _var_totalprovincias loop
-				insert into log (mensaje) values('ENTRE 4');
+
 					_var_provinciaBusqueda := 0;
 					select provincia into _var_provinciaUbigeo from tmp_UBIGEOprovincia2 where id = _var_contadorprovincias2;
 					 
@@ -169,7 +164,7 @@ while _var_contadorOferta <= _var_totalOferta loop
 					_var_provinciaBusqueda3 := 0;
 
 					while _var_contadordistrito2 <= _var_totaldistritoes loop
-						insert into log (mensaje) values('ENTRE 5');
+
 						select  distrito into _var_distrito from tmp_UBIGEOdistrito3 where id = _var_contadordistrito2;
 
 						select  POSITION(upper(_var_distrito) in upper(_var_lugar)) into _var_provinciaBusqueda;
@@ -198,7 +193,7 @@ while _var_contadorOferta <= _var_totalOferta loop
 	end loop;
 
 	if _var_provinciaBusqueda1 = 1 and _var_provinciaBusqueda2 = 0 and _var_provinciaBusqueda3 = 0 then
-		insert into log (mensaje) values('ENTRE 6');
+	
 		select idUbigeo into _var_IdUbigeo from UBIGEO where departamento = _var_departamento;
 		update oferta set idUbigeo = _var_idubigeo where id_oferta = _var_idoferta;
 	end if;
